@@ -58,6 +58,7 @@ export const NewProductUI = () => {
                         <div className="block">
                             <input
                                 name="price"
+                                type="number"
                                 autoComplete="off"
                                 onBlur={newProduct.handleBlur}
                                 value={newProduct.values.price}

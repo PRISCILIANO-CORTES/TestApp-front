@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProductDB } from "../redux/product/productThunk";
 
-export const MainProduct = ({ _id, name, price, category, description, isActiveProduct }) => {
+export const MainProduct = ({ _id, name, price, isActiveProduct }) => {
 
     const dispatch = useDispatch()
 	const navigate = useNavigate();

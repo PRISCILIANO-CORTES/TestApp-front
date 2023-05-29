@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const uri = process.env.REACT_APP_API
 
-const pepsicoApi = axios.create({
+const productApi = axios.create({
     baseURL: uri
 });
 
 //* Create interceptors
-pepsicoApi.interceptors.request.use(config => {
+productApi.interceptors.request.use(config => {
 
     config.headers = {
         ...config.headers,
@@ -17,4 +17,4 @@ pepsicoApi.interceptors.request.use(config => {
     return config
 });
 
-export default pepsicoApi;
+export default productApi;

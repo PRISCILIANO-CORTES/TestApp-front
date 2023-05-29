@@ -1,13 +1,13 @@
+import Swal from "sweetalert2";
 import productApi from "../../api/productApi";
 import { globalFilterProducts } from "../../helper/globalFilter";
-import { onAddNewProduct, onDeleteProduct, setFilterProduct, setProduct } from "./productSlice";
+import { onAddNewProduct, onDeleteProduct, onUpdateProduct, setFilterProduct, setProduct } from "./productSlice";
 
 export const addNewProduct = (values) => {
     return async (dispatch) => {
         try {
             const { data } = await productApi.post('/product/', values);
 
-            console.log(data)
             const newProduct = {
                 _id: data.product._id,
                 name: data.product.name,
@@ -19,8 +19,40 @@ export const addNewProduct = (values) => {
 
             dispatch(onAddNewProduct({ product: newProduct }))
 
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+              
+            Toast.fire({
+                icon: 'success',
+                title: 'Product create successfully'
+            })
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+              
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed in created product'
+            })
         }
     }
 }
@@ -55,6 +87,55 @@ export const deleteProductDB = (_id) => {
 
         } catch (error) {
             console.log(error)
+        }
+    }
+}
+
+export const updateProductDB = (values) => {
+    return async(dispatch) => {
+
+        const { id, name, price, category, description } = values;
+
+        try {
+            await productApi.put(`/product/${id}`, { name, price, category, description });
+
+            dispatch(onUpdateProduct(values))
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+              
+            Toast.fire({
+                icon: 'success',
+                title: 'Product updated successfully'
+            })
+
+        } catch (error) {
+            console.log(error)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+              
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed in updated product'
+            })
         }
     }
 }

@@ -29,7 +29,11 @@ export const productSlice = createSlice({
         onAddNewProduct: (state, { payload }) => {
             state.product.push(payload.product);
         },
-
+        onUpdateProduct: (state, { payload }) => {
+            state.product = state.product.map(
+                e => (e.key === payload.key) ? payload : e
+            )
+        }
     }
 });
 
@@ -39,6 +43,7 @@ export const {
     setFilterProduct,
     searchByName,
     onDeleteProduct,
-    onAddNewProduct
+    onAddNewProduct,
+    onUpdateProduct
 } = productSlice.actions;
 
